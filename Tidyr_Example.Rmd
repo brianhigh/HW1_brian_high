@@ -27,6 +27,7 @@ Let's revisite our `iris` dataset.
 ```{r reshape2}
 # We first load the library
 library(reshape2)
+attach(iris)
 # Only display the first few lines
 head(iris)
 ```
