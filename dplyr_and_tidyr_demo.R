@@ -32,15 +32,10 @@ suppressMessages(library(tidyr))
 
 #' ## Add id column to data table
 
-#' Coerce the iris data frame into a data table (not required).
-
-#+ tbl_dt, echo=TRUE
-iris_dt <- tbl_dt(iris)
-
-#' Add a column to keep track of the flower.
+#' Add a column to keep track of the flower id.
 
 #+ mutate-flower_id, echo=TRUE
-iris_id <- mutate(iris_dt, flower_id = rownames(iris))
+iris_id <- mutate(iris, flower_id = rownames(iris))
 head(iris_id)
 
 #' ## dplyr and tidyr: gather
@@ -57,9 +52,9 @@ head(iris_gathered)
 
 #+ parse, echo=TRUE
 iris_parsed <- mutate(iris_gathered, 
-    flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
-    measurement_type = gsub("\\w*\\.(\\w*)", "\\1", variable),
-    variable = NULL)
+                      flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
+                      measurement_type = gsub("\\w*\\.(\\w*)", "\\1", variable),
+                      variable = NULL)
 head(iris_parsed)
 
 #' ## dplyr and tidyr: spread
@@ -70,11 +65,11 @@ head(iris_parsed)
 iris_spread <- spread(iris_parsed, measurement_type, value)
 head(iris_spread)
 
-#' ## Plot with ggplot2
+#' ## Plot with ggplot2's `qplot`
 
-#' Produce faceted plot with ggplot2's qplot.
+#' Produce faceted plot with ggplot2's `qplot`.
 
-#+ ggplot-iris-spread, echo=TRUE, fig.height=4
+#+ qplot-iris-spread, echo=TRUE, fig.height=4
 qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"), 
       color=Species, method="lm", facets= flower_part~Species)
 
@@ -83,18 +78,17 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 #' All of the data tidying could be done in one "pipe line".
 
 #+ pipe, echo=TRUE
-iris_spread <- tbl_dt(iris) %>% 
-    mutate(flower_id = rownames(iris)) %>%
+iris_spread <- mutate(iris, flower_id = rownames(iris)) %>%
     gather(variable, value, c(-Species, -flower_id)) %>%
     mutate(flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
            measurement_type = gsub("\\w*\\.(\\w*)", "\\1", variable),
            variable = NULL) %>%
     spread(measurement_type, value)
 
-#' ## Plot with ggplot2 again
+#' ## Plot with ggplot2's `qplot` again
 
-#' Produce the faceted plot again with ggplot2's qplot.
+#' Produce the faceted plot again with ggplot2's `qplot`.
 
-#+ ggplot-iris-spread-pipe, echo=TRUE, fig.height=4
+#+ qplot-iris-spread-pipe, echo=TRUE, fig.height=4
 qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"), 
       color=Species, method="lm", facets= flower_part~Species)

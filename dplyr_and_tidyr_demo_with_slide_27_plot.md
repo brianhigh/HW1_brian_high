@@ -22,18 +22,11 @@ suppressMessages(library(tidyr))
 ```
 
 ## Add id column to data table
-Coerce the iris data frame into a data table (not required).
+Add a column to keep track of the flower id.
 
 
 ```r
-iris_dt <- tbl_dt(iris)
-```
-
-Add a column to keep track of the flower.
-
-
-```r
-iris_id <- mutate(iris_dt, flower_id = rownames(iris))
+iris_id <- mutate(iris, flower_id = rownames(iris))
 head(iris_id)
 ```
 
@@ -123,8 +116,7 @@ All of the data tidying could be done in one "pipe line".
 
 
 ```r
-iris_spread <- tbl_dt(iris) %>% 
-    mutate(flower_id = rownames(iris)) %>%
+iris_spread <- mutate(iris, flower_id = rownames(iris)) %>%
     gather(variable, value, c(-Species, -flower_id)) %>%
     mutate(flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
            measurement_type = gsub("\\w*\\.(\\w*)", "\\1", variable),
@@ -143,7 +135,7 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 
 ![plot of chunk qplot-iris-spread-pipe](figure/qplot-iris-spread-pipe-1.png) 
 
-## Plot with `ggplot2`
+## Plot with `ggplot`
 Produce a faceted plot with `ggplot2` instead of `qplot`.
 
 

@@ -106,15 +106,9 @@ suppressMessages(library(tidyr))</pre>
 
 </article></slide><slide class=''><hgroup><h2>Add id column to data table</h2></hgroup><article  id="add-id-column-to-data-table" class="smaller ">
 
-<p>Coerce the iris data frame into a data table (not required).</p>
-
-<pre class = 'prettyprint lang-r'>iris_dt &lt;- tbl_dt(iris)</pre>
-
-<pre >## Loading required namespace: data.table</pre>
-
 <p>Add a column to keep track of the flower.</p>
 
-<pre class = 'prettyprint lang-r'>iris_id &lt;- mutate(iris_dt, flower_id = rownames(iris))
+<pre class = 'prettyprint lang-r'>iris_id &lt;- mutate(iris, flower_id = rownames(iris))
 head(iris_id)</pre>
 
 <pre >##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species flower_id
@@ -186,8 +180,7 @@ head(iris_spread)</pre>
 
 <p>All of the data tidying could be done in one &quot;pipe line&quot;.</p>
 
-<pre class = 'prettyprint lang-r'>iris_spread &lt;- tbl_dt(iris) %&gt;% 
-    mutate(flower_id = rownames(iris)) %&gt;%
+<pre class = 'prettyprint lang-r'>iris_spread &lt;- mutate(iris, flower_id = rownames(iris)) %&gt;%
     gather(variable, value, c(-Species, -flower_id)) %&gt;%
     mutate(flower_part = gsub(&quot;(\\w*)\\.\\w*&quot;, &quot;\\1&quot;, variable), 
            measurement_type = gsub(&quot;\\w*\\.(\\w*)&quot;, &quot;\\1&quot;, variable),

@@ -20,22 +20,12 @@ suppressMessages(library(tidyr))
 ```
 
 ## Add id column to data table
-Coerce the iris data frame into a data table (not required).
-
-
-```r
-iris_dt <- tbl_dt(iris)
-```
-
-```
-## Loading required namespace: data.table
-```
 
 Add a column to keep track of the flower.
 
 
 ```r
-iris_id <- mutate(iris_dt, flower_id = rownames(iris))
+iris_id <- mutate(iris, flower_id = rownames(iris))
 head(iris_id)
 ```
 
@@ -118,15 +108,14 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
       color=Species, method="lm", facets= flower_part~Species)
 ```
 
-![](dplyr_and_tidyr_demo_manually_edited_files/figure-html/unnamed-chunk-8-1.png) 
+![](dplyr_and_tidyr_demo_manually_edited_files/figure-html/unnamed-chunk-7-1.png) 
 
 ## Repeat using a pipe
 All of the data tidying could be done in one "pipe line".
 
 
 ```r
-iris_spread <- tbl_dt(iris) %>% 
-    mutate(flower_id = rownames(iris)) %>%
+iris_spread <- mutate(iris, flower_id = rownames(iris)) %>%
     gather(variable, value, c(-Species, -flower_id)) %>%
     mutate(flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
            measurement_type = gsub("\\w*\\.(\\w*)", "\\1", variable),
@@ -143,4 +132,4 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
       color=Species, method="lm", facets= flower_part~Species)
 ```
 
-![](dplyr_and_tidyr_demo_manually_edited_files/figure-html/unnamed-chunk-10-1.png) 
+![](dplyr_and_tidyr_demo_manually_edited_files/figure-html/unnamed-chunk-9-1.png) 
