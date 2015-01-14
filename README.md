@@ -19,3 +19,6 @@ This is a file list:
 - dplyr_and_tidyr_demo.Rmd: Rmd file created by running the R script
 - dplyr_and_tidyr_demo.md: md file created by knitting the Rmd file. 
 - dplyr_and_tidyr_demo.html: HTML file created by knitting the Rmd file.
+
+... and "_manually_edited" versions of the last three to conform to the 
+format of the other Rmd presentations used for this course.
