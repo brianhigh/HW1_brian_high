@@ -13,7 +13,7 @@ output:
 ## Let's load ggplot2 and iris dataset
 
 ```{r, excho=TRUE}
-library(ggplot2)
+suppressMessages(library(ggplot2))
 data(iris)
 ```
 
@@ -29,7 +29,7 @@ This package provides main functions `melt` and `*cast`. `melt` basically "melts
 Let's revisit our `iris` dataset.
 ```{r reshape2}
 # We first load the library
-library(reshape2)
+suppressMessages(library(reshape2))
 # Only display the first few lines
 head(iris)
 ```
@@ -53,7 +53,7 @@ head(iris_melted)
 We can also add the flower_id column with dplyr's `mutate` function:
 
 ```{r dplyr-mutate}
-library(dplyr)
+suppressMessages(library(dplyr))
 # We need to add a column to keep track of the flower
 iris_id <- mutate(iris, flower_id = rownames(iris))
 head(iris_id)
@@ -64,7 +64,7 @@ head(iris_id)
 Then we can use tidyr and `gather` instead of reshape2 and `melt`:
 
 ```{r, tidyr-gather}
-library(tidyr)
+suppressMessages(library(tidyr))
 iris_gathered <- gather(iris_id, variable, value, c(-Species, -flower_id))
 head(iris_gathered)
 ```
