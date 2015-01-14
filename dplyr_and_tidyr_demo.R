@@ -32,3 +32,15 @@ head(iris_spread)
 # Produce faceted plot with ggplot2's qplot 
 qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"), 
       color=Species, method="lm", facets= flower_part~Species)
+
+# All of the data tidying could be done in one piped "line"
+iris_spread <- mutate(iris, flower_id = rownames(iris)) %>%
+    gather(variable, value, c(-Species, -flower_id)) %>%
+    mutate(flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
+           measurement_type = gsub("\\w*\\.(\\w*)", "\\1", variable),
+           variable = NULL) %>%
+    spread(measurement_type, value)
+
+# Produce the faceted plot again with ggplot2's qplot 
+qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"), 
+      color=Species, method="lm", facets= flower_part~Species)
