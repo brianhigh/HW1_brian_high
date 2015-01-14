@@ -91,7 +91,7 @@ Use `acast` or `dcast` depending on whether you want vector/matrix/array output 
 
 ```{r reshape2-cast}
 iris_cast <- dcast(iris_melted, formula=flower_id+Species+flower_part~measurement_type)
-head(iris_cast)
+#head(iris_cast)
 ```
 
 **Q:** Why are the elements of `flower_id` not properly ordered?
