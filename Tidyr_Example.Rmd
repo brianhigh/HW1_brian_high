@@ -27,6 +27,7 @@ Let's revisite our `iris` dataset.
 ```{r reshape2}
 # We first load the library
 library(reshape2)
+attach(iris)
 # Only display the first few lines
 head(iris)
 ```
@@ -91,7 +92,7 @@ Use `acast` or `dcast` depending on whether you want vector/matrix/array output 
 
 ```{r reshape2-cast}
 iris_cast <- dcast(iris_melted, formula=flower_id+Species+flower_part~measurement_type)
-head(iris_cast)
+#head(iris_cast)
 ```
 
 **Q:** Why are the elements of `flower_id` not properly ordered?
