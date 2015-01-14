@@ -94,12 +94,12 @@
 
 <slide class=''><hgroup><h2>Load packages and data</h2></hgroup><article  id="load-packages-and-data" class="smaller ">
 
-<p>Load ggplot2 and iris data</p>
+<p>Load ggplot2 and iris data.</p>
 
 <pre class = 'prettyprint lang-r'>suppressMessages(library(ggplot2))
 data(iris)</pre>
 
-<p>Load dplyr and tidyr</p>
+<p>Load dplyr and tidyr.</p>
 
 <pre class = 'prettyprint lang-r'>suppressMessages(library(dplyr))
 suppressMessages(library(tidyr))</pre>
@@ -110,7 +110,7 @@ suppressMessages(library(tidyr))</pre>
 
 <pre class = 'prettyprint lang-r'>iris_dt &lt;- tbl_dt(iris)</pre>
 
-<p>Add a column to keep track of the flower</p>
+<p>Add a column to keep track of the flower.</p>
 
 <pre class = 'prettyprint lang-r'>iris_id &lt;- mutate(iris_dt, flower_id = rownames(iris))
 head(iris_id)</pre>
@@ -125,7 +125,7 @@ head(iris_id)</pre>
 
 </article></slide><slide class=''><hgroup><h2>dplyr and tidyr: gather</h2></hgroup><article  id="dplyr-and-tidyr-gather" class="smaller ">
 
-<p>Convert wide data format to long format</p>
+<p>Convert wide data format to long format.</p>
 
 <pre class = 'prettyprint lang-r'>iris_gathered &lt;- gather(iris_id, variable, value, c(-Species, -flower_id))
 head(iris_gathered)</pre>
@@ -140,7 +140,7 @@ head(iris_gathered)</pre>
 
 </article></slide><slide class=''><hgroup><h2>dplyr and tidyr: mutate and gsub</h2></hgroup><article  id="dplyr-and-tidyr-mutate-and-gsub" class="smaller ">
 
-<p>Add new columns for the parsed values, remove the variable column</p>
+<p>Add new columns for the parsed values, remove the variable column.</p>
 
 <pre class = 'prettyprint lang-r'>iris_parsed &lt;- mutate(iris_gathered, 
     flower_part = gsub(&quot;(\\w*)\\.\\w*&quot;, &quot;\\1&quot;, variable), 
@@ -158,7 +158,7 @@ head(iris_parsed)</pre>
 
 </article></slide><slide class=''><hgroup><h2>dplyr and tidyr: spread</h2></hgroup><article  id="dplyr-and-tidyr-spread" class="smaller ">
 
-<p>Convert measurement_types to columns in wide format</p>
+<p>Convert measurement_types to columns in wide format.</p>
 
 <pre class = 'prettyprint lang-r'>iris_spread &lt;- spread(iris_parsed, measurement_type, value)
 head(iris_spread)</pre>
@@ -173,7 +173,7 @@ head(iris_spread)</pre>
 
 </article></slide><slide class=''><hgroup><h2>Plot with ggplot2</h2></hgroup><article  id="plot-with-ggplot2" class="smaller ">
 
-<p>Produce faceted plot with ggplot2&#39;s qplot</p>
+<p>Produce faceted plot with ggplot2&#39;s qplot.</p>
 
 <pre class = 'prettyprint lang-r'>qplot(x=Width, y=Length, data=iris_spread, geom=c(&quot;point&quot;,&quot;smooth&quot;), 
       color=Species, method=&quot;lm&quot;, facets= flower_part~Species)</pre>
@@ -182,7 +182,7 @@ head(iris_spread)</pre>
 
 </article></slide><slide class=''><hgroup><h2>Repeat using a pipe</h2></hgroup><article  id="repeat-using-a-pipe" class="smaller ">
 
-<p>All of the data tidying could be done in one &quot;pipe line&quot;</p>
+<p>All of the data tidying could be done in one &quot;pipe line&quot;.</p>
 
 <pre class = 'prettyprint lang-r'>iris_spread &lt;- tbl_dt(iris) %&gt;% 
     mutate(flower_id = rownames(iris)) %&gt;%
@@ -194,7 +194,7 @@ head(iris_spread)</pre>
 
 </article></slide><slide class=''><hgroup><h2>Plot with ggplot2 again</h2></hgroup><article  id="plot-with-ggplot2-again" class="smaller ">
 
-<p>Produce the faceted plot again with ggplot2&#39;s qplot</p>
+<p>Produce the faceted plot again with ggplot2&#39;s qplot.</p>
 
 <pre class = 'prettyprint lang-r'>qplot(x=Width, y=Length, data=iris_spread, geom=c(&quot;point&quot;,&quot;smooth&quot;), 
       color=Species, method=&quot;lm&quot;, facets= flower_part~Species)</pre>

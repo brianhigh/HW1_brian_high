@@ -5,7 +5,7 @@ Jan. 14th, 2015
 
 
 ## Load packages and data
-Load ggplot2 and iris data
+Load ggplot2 and iris data.
 
 
 ```r
@@ -13,7 +13,7 @@ suppressMessages(library(ggplot2))
 data(iris)
 ```
 
-Load dplyr and tidyr
+Load dplyr and tidyr.
 
 
 ```r
@@ -29,7 +29,7 @@ Coerce the iris data frame into a data table (not required).
 iris_dt <- tbl_dt(iris)
 ```
 
-Add a column to keep track of the flower
+Add a column to keep track of the flower.
 
 
 ```r
@@ -48,7 +48,7 @@ head(iris_id)
 ```
 
 ## dplyr and tidyr: gather
-Convert wide data format to long format
+Convert wide data format to long format.
 
 
 ```r
@@ -67,7 +67,7 @@ head(iris_gathered)
 ```
 
 ## dplyr and tidyr: mutate and gsub
-Add new columns for the parsed values, remove the variable column
+Add new columns for the parsed values, remove the variable column.
 
 
 ```r
@@ -89,7 +89,7 @@ head(iris_parsed)
 ```
 
 ## dplyr and tidyr: spread
-Convert measurement_types to columns in wide format
+Convert measurement_types to columns in wide format.
 
 
 ```r
@@ -108,7 +108,7 @@ head(iris_spread)
 ```
 
 ## Plot with ggplot2
-Produce faceted plot with ggplot2's qplot 
+Produce faceted plot with ggplot2's qplot.
 
 
 ```r
@@ -119,7 +119,7 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 ![plot of chunk ggplot-iris-spread](figure/ggplot-iris-spread-1.png) 
 
 ## Repeat using a pipe
-All of the data tidying could be done in one "pipe line"
+All of the data tidying could be done in one "pipe line".
 
 
 ```r
@@ -133,7 +133,7 @@ iris_spread <- tbl_dt(iris) %>%
 ```
 
 ## Plot with ggplot2 again
-Produce the faceted plot again with ggplot2's qplot 
+Produce the faceted plot again with ggplot2's qplot.
 
 
 ```r

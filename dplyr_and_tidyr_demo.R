@@ -18,13 +18,13 @@ file.rename("dplyr_and_tidyr_demo.md", "dplyr_and_tidyr_demo.Rmd")
 
 #' ## Load packages and data
 
-#' Load ggplot2 and iris data
+#' Load ggplot2 and iris data.
 
 #+ library-ggplot2-data, echo=TRUE
 suppressMessages(library(ggplot2))
 data(iris)
 
-#' Load dplyr and tidyr
+#' Load dplyr and tidyr.
 
 #+ library-dplyr-tidyr, echo=TRUE
 suppressMessages(library(dplyr))
@@ -37,7 +37,7 @@ suppressMessages(library(tidyr))
 #+ tbl_dt, echo=TRUE
 iris_dt <- tbl_dt(iris)
 
-#' Add a column to keep track of the flower
+#' Add a column to keep track of the flower.
 
 #+ mutate-flower_id, echo=TRUE
 iris_id <- mutate(iris_dt, flower_id = rownames(iris))
@@ -45,7 +45,7 @@ head(iris_id)
 
 #' ## dplyr and tidyr: gather
 
-#' Convert wide data format to long format
+#' Convert wide data format to long format.
 
 #+ gather-Species-and-flower_id, echo=TRUE
 iris_gathered <- gather(iris_id, variable, value, c(-Species, -flower_id))
@@ -53,7 +53,7 @@ head(iris_gathered)
 
 #' ## dplyr and tidyr: mutate and gsub
 
-#' Add new columns for the parsed values, remove the variable column
+#' Add new columns for the parsed values, remove the variable column.
 
 #+ parse, echo=TRUE
 iris_parsed <- mutate(iris_gathered, 
@@ -64,7 +64,7 @@ head(iris_parsed)
 
 #' ## dplyr and tidyr: spread
 
-#' Convert measurement_types to columns in wide format
+#' Convert measurement_types to columns in wide format.
 
 #+ spread, echo=TRUE
 iris_spread <- spread(iris_parsed, measurement_type, value)
@@ -72,7 +72,7 @@ head(iris_spread)
 
 #' ## Plot with ggplot2
 
-#' Produce faceted plot with ggplot2's qplot 
+#' Produce faceted plot with ggplot2's qplot.
 
 #+ ggplot-iris-spread, echo=TRUE, fig.height=4
 qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"), 
@@ -80,7 +80,7 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 
 #' ## Repeat using a pipe
 
-#' All of the data tidying could be done in one "pipe line"
+#' All of the data tidying could be done in one "pipe line".
 
 #+ pipe, echo=TRUE
 iris_spread <- tbl_dt(iris) %>% 
@@ -93,7 +93,7 @@ iris_spread <- tbl_dt(iris) %>%
 
 #' ## Plot with ggplot2 again
 
-#' Produce the faceted plot again with ggplot2's qplot 
+#' Produce the faceted plot again with ggplot2's qplot.
 
 #+ ggplot-iris-spread-pipe, echo=TRUE, fig.height=4
 qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"), 
