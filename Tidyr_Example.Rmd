@@ -84,11 +84,11 @@ iris_melted$variable <- NULL
 head(iris_melted)
 ```
 
-## tidyr - gather
+## Mutate and gsub
 
-Likewise, using our "gathered" data, we can use dplyr's `mutate` function and `gsub` to search and replace (with "regular expressions").
+Likewise, using our "gathered" data, we can use dplyr's `mutate` function and `gsub` (from base R) to search and replace (with "regular expressions").
 
-```{r tidyr-gather-suite}
+```{r dplyr-mutate-and-gsub}
 # Add new columns for the parsed values, remove the variable column
 iris_parsed <- mutate(iris_gathered, 
     flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
