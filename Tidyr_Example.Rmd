@@ -1,0 +1,129 @@
+---
+title: 'Bioinformatics for Big Omics Data: Tidyr Example'
+author: "Raphael Gottardo and Brian High"
+date: "December 13, 2014"
+output:
+  ioslides_presentation:
+    fig_caption: yes
+    fig_retina: 1
+    keep_md: yes
+    smaller: yes
+---
+
+## Let's load ggplot2
+
+```{r, excho=TRUE}
+library(ggplot2)
+```
+
+## Reshaping your data with reshape2
+
+It is often necessary to reshape (e.g. pivot) your data before analysis. This can easily be done in R using the `reshape2` package.
+This package provides main functions `melt` and `*cast`. `melt` basically "melts" a dataframe in wide format into a long format. `*cast` goes in the other direction.
+
+## Reshaping your data with reshape2
+
+Let's revisite our `iris` dataset.
+```{r reshape2}
+# We first load the library
+library(reshape2)
+# Only display the first few lines
+head(iris)
+```
+
+We can see in the data above that we are measuring both width and length on two different flower characteristics: Sepal, and Petal. So we could store the same information with only one length (resp. width) column and an additional variable for type (Sepal/Petal). 
+
+## reshape2 - melt
+
+The `melt` function provides some good default options that will try to best guess how to "melt" the data.
+
+```{r reshape2-melt}
+# We first need to add a column to keep track of the flower
+iris$flower_id <- rownames(iris)
+# Default options
+iris_melted <- melt(iris)
+head(iris_melted)
+```
+
+## tidyr - gather
+
+Or, alternatively, using tidyr and "gather" instead of reshape2 and "melt":
+
+```{r, tidyr-gather}
+library(tidyr)
+iris_gathered <- gather(iris, variable, value, c(-Species, -flower_id))
+head(iris_gathered)
+```
+
+## reshape2 - melt
+
+```{r reshape2-melt-suite}
+# We first split that variable to get the columns we need
+split_variable <- strsplit(as.character(iris_melted$variable),split="\\.")
+# Create two new variables
+iris_melted$flower_part <- sapply(split_variable, "[", 1)
+iris_melted$measurement_type <- sapply(split_variable, "[", 2)
+# Remove the one we don't need anymore
+iris_melted$variable <- NULL
+head(iris_melted)
+```
+
+This is close but not quite what we want, let's see if cast can help us do what we need.
+
+## tidyr - gather
+
+And the same operation, but instead with the "gathered" data.frame...
+
+```{r tidyr-gather-suite}
+# We first split that variable to get the columns we need
+split_variable <- strsplit(as.character(iris_gathered$variable),split="\\.")
+# Create two new variables
+iris_gathered$flower_part <- sapply(split_variable, "[", 1)
+iris_gathered$measurement_type <- sapply(split_variable, "[", 2)
+# Remove the one we don't need anymore
+iris_gathered$variable <- NULL
+head(iris_gathered)
+```
+
+## reshape2 - cast
+
+Use `acast` or `dcast` depending on whether you want vector/matrix/array output or data frame output. Data frames can have at most two dimensions.
+
+```{r reshape2-cast}
+iris_cast <- dcast(iris_melted, formula=flower_id+Species+flower_part~measurement_type)
+head(iris_cast)
+```
+
+**Q:** Why are the elements of `flower_id` not properly ordered?
+
+`melt` and `*cast` are very powerful. These can also be used on `data.tables`. More on this latter.
+
+**Exercise:** Try to reorder the variable names in the formula. What happens?
+
+## tidyr - spread
+
+And the same plot using spread with the tidyr "gathered" data.frame...
+
+```{r tidyr-spread}
+iris_spread <- spread(iris_gathered, measurement_type, value)
+head(iris_spread)
+```
+
+## Back to ggplot2
+
+Using our long format dataframe, we can further explore the iris dataset.
+
+```{r multi-facet, fig.height=4}
+# We can now facet by Species and Petal/Sepal
+qplot(x=Width, y=Length, data=iris_cast, geom=c("point","smooth"), color=Species, method="lm", facets= flower_part~Species)
+```
+
+It would be nice to see if we could have free scales for the panels, but before we explore this, let's talk about the `ggplot` API as an alternative to qplot. Can we also customize the look and feel?
+
+## Back to ggplot2 - tidyr
+
+And again, using the tidyr data.frame...
+
+```{r multi-facet-tidyr, fig.height=4}
+qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"), color=Species, method="lm", facets= flower_part~Species)
+```
