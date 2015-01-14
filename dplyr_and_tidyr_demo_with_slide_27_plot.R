@@ -104,7 +104,8 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 #' Produce a faceted plot with `ggplot2` instead of `qplot`.
 
 #+ ggplot-iris-spread-pipe, echo=TRUE, fig.height=4
-ggplot(data=iris_spread, aes(x=Width, y=Length))+ # Add points and use free scales in the facet
+ggplot(data=iris_spread, aes(x=Width, y=Length))+ 
+    # Add points and use free scales in the facet
     geom_point()+facet_grid(Species~flower_part, scale="free")+
     # Add a regression line
     geom_smooth(method="lm")+

@@ -157,10 +157,13 @@ Produce a faceted plot with `ggplot2` instead of `qplot`.
 
 
 ```r
-ggplot(data=iris_spread, aes(x=Width, y=Length))+ # Add points and use free scales in the facet
+ggplot(data=iris_spread, aes(x=Width, y=Length))+ 
+    # Add points and use free scales in the facet
     geom_point()+facet_grid(Species~flower_part, scale="free")+
     # Add a regression line
-    geom_smooth(method="lm")
+    geom_smooth(method="lm")+
+    # Use the black/white theme and increase the font size
+    theme_bw(base_size=18)
 ```
 
 ![plot of chunk ggplot-iris-spread-pipe](figure/ggplot-iris-spread-pipe-1.png) 
