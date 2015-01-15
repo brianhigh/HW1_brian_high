@@ -16,8 +16,8 @@ This is a file list:
 
 - Tidyr_Example.Rmd: Compares Reshape2 and Dplyr/Tidyr
 - dplyr_and_tidyr_demo.R: R script showing just the Dplyr/Tidyr demo
-- dplyr_and_tidyr_demo.Rmd: Rmd file created by running the R script (and some manual editing)
-- **dplyr_and_tidyr_demo.md: Markdown file created by knitting the Rmd file**
+- **dplyr_and_tidyr_demo.Rmd**: Rmd file created by running the R script (and some manual formatting)
+- dplyr_and_tidyr_demo.md: Markdown file created by knitting the Rmd file
 - dplyr_and_tidyr_demo.html: HTML file created by knitting the Rmd file
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
