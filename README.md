@@ -2,8 +2,8 @@
 
 This is an example homework #1 for BIOST 578 A, Winter 2015.
 
-- Reviewer: Reviewer Name
-- Group: #
+- Reviewer: Brian Highr
+- Group: 14
 
 While the [assignment](https://github.com/raphg/Biostat-578/blob/master/HW1.md) 
 was to produce an Rmd file to produce a certain plot, 
