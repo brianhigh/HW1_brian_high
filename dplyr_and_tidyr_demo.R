@@ -1,7 +1,7 @@
 #' ---
 #' title: "dplyr and tidyr demonstration"
-#' author: "Brian High and Raphael Gottardo"
-#' date: "Jan. 14th, 2015"
+#' author: "Brian High"
+#' date: "Jan. 15th, 2015"
 #' output:
 #'      ioslides_presentation:
 #'          fig_caption: yes
@@ -15,6 +15,24 @@
 suppressMessages(library(knitr))
 spin(report = TRUE, hair = "dplyr_and_tidyr_demo.R", format = "Rmd")
 file.rename("dplyr_and_tidyr_demo.md", "dplyr_and_tidyr_demo.Rmd")
+
+#' ## Introduction
+
+#' This example shows an alternate way to generate the plot from Raphael
+#' Gottardo's RMarkdown presentation: 
+#' [Advanced_graphics_in_R.Rmd](https://github.com/raphg/Biostat-578/blob/master/Advanced_graphics_in_R.Rmd)  
+
+#+ line-break-1, echo=FALSE, eval=FALSE
+
+#' The code presented here was written by Brian High, except for the `qplot`
+#' and `ggplot` plotting code, which was modified from Raphael Gottardo's original.
+
+#+ line-break-2, echo=FALSE, eval=FALSE
+
+#' This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+#' ![CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/88x31.png)
+
+#+ page-break-1, echo=FALSE, eval=FALSE
 
 #' ## Load packages and data
 
@@ -92,3 +110,16 @@ iris_spread <- mutate(iris, flower_id = rownames(iris)) %>%
 #+ qplot-iris-spread-pipe, echo=TRUE, fig.height=4
 qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"), 
       color=Species, method="lm", facets= flower_part~Species)
+
+#' ## Plot with `ggplot`
+
+#' Produce a faceted plot with `ggplot2` instead of `qplot`.
+
+#+ ggplot-iris-spread-pipe, echo=TRUE, fig.height=4
+ggplot(data=iris_spread, aes(x=Width, y=Length))+ 
+    # Add points and use free scales in the facet
+    geom_point()+facet_grid(Species~flower_part, scale="free")+
+    # Add a regression line
+    geom_smooth(method="lm")+
+    # Use the black/white theme and increase the font size
+    theme_bw(base_size=18)
