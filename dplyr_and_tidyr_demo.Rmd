@@ -144,3 +144,6 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 
 ![plot of chunk qplot-iris-spread-pipe](figure/qplot-iris-spread-pipe-1.png) 
 
+## The End
+
+Thanks!
