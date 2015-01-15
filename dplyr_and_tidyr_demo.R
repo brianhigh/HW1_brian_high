@@ -50,13 +50,13 @@ suppressMessages(library(tidyr))
 
 #' ## Add id column to data table
 
-#' Add a column to keep track of the flower id.
+#' Using `mutate`, add a column to keep track of the flower id.
 
 #+ mutate-flower_id, echo=TRUE
 iris_id <- mutate(iris, flower_id = rownames(iris))
 head(iris_id)
 
-#' ## dplyr and tidyr: gather
+#' ## dplyr and tidyr: `gather`
 
 #' Convert wide data format to long format.
 
@@ -64,7 +64,7 @@ head(iris_id)
 iris_gathered <- gather(iris_id, variable, value, c(-Species, -flower_id))
 head(iris_gathered)
 
-#' ## dplyr and tidyr: mutate and gsub
+#' ## dplyr and tidyr: `mutate` and `gsub`
 
 #' Add new columns for the parsed values, remove the variable column.
 
@@ -75,7 +75,7 @@ iris_parsed <- mutate(iris_gathered,
                       variable = NULL)
 head(iris_parsed)
 
-#' ## dplyr and tidyr: spread
+#' ## dplyr and tidyr: `spread`
 
 #' Convert measurement_types to columns in wide format.
 
@@ -113,7 +113,7 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 
 #' ## Plot with `ggplot`
 
-#' Produce a faceted plot with `ggplot2` instead of `qplot`.
+#' Produce a faceted plot with ggplot2's `ggplot` instead of `qplot`.
 
 #+ ggplot-iris-spread-pipe, echo=TRUE, fig.height=4
 ggplot(data=iris_spread, aes(x=Width, y=Length))+ 

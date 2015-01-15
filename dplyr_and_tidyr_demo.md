@@ -32,7 +32,7 @@ suppressMessages(library(tidyr))
 ```
 
 ## Add id column to data table
-Add a column to keep track of the flower id.
+Using `mutate`, add a column to keep track of the flower id.
 
 
 ```r
@@ -50,7 +50,7 @@ head(iris_id)
 ## 6          5.4         3.9          1.7         0.4  setosa         6
 ```
 
-## dplyr and tidyr: gather
+## dplyr and tidyr: `gather`
 Convert wide data format to long format.
 
 
@@ -69,7 +69,7 @@ head(iris_gathered)
 ## 6  setosa         6 Sepal.Length   5.4
 ```
 
-## dplyr and tidyr: mutate and gsub
+## dplyr and tidyr: `mutate` and `gsub`
 Add new columns for the parsed values, remove the variable column.
 
 
@@ -91,7 +91,7 @@ head(iris_parsed)
 ## 6  setosa         6   5.4       Sepal           Length
 ```
 
-## dplyr and tidyr: spread
+## dplyr and tidyr: `spread`
 Convert measurement_types to columns in wide format.
 
 
@@ -146,7 +146,7 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 ![](dplyr_and_tidyr_demo_files/figure-html/qplot-iris-spread-pipe-1.png) 
 
 ## Plot with `ggplot`
-Produce a faceted plot with `ggplot2` instead of `qplot`.
+Produce a faceted plot with ggplot2's `ggplot` instead of `qplot`.
 
 
 ```r

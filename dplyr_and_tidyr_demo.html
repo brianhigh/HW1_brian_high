@@ -114,7 +114,7 @@ suppressMessages(library(tidyr))</pre>
 
 </article></slide><slide class=''><hgroup><h2>Add id column to data table</h2></hgroup><article  id="add-id-column-to-data-table" class="smaller ">
 
-<p>Add a column to keep track of the flower id.</p>
+<p>Using <code>mutate</code>, add a column to keep track of the flower id.</p>
 
 <pre class = 'prettyprint lang-r'>iris_id &lt;- mutate(iris, flower_id = rownames(iris))
 head(iris_id)</pre>
@@ -127,7 +127,7 @@ head(iris_id)</pre>
 ## 5          5.0         3.6          1.4         0.2  setosa         5
 ## 6          5.4         3.9          1.7         0.4  setosa         6</pre>
 
-</article></slide><slide class=''><hgroup><h2>dplyr and tidyr: gather</h2></hgroup><article  id="dplyr-and-tidyr-gather" class="smaller ">
+</article></slide><slide class=''><hgroup><h2>dplyr and tidyr: <code>gather</code></h2></hgroup><article  id="dplyr-and-tidyr-gather" class="smaller ">
 
 <p>Convert wide data format to long format.</p>
 
@@ -142,7 +142,7 @@ head(iris_gathered)</pre>
 ## 5  setosa         5 Sepal.Length   5.0
 ## 6  setosa         6 Sepal.Length   5.4</pre>
 
-</article></slide><slide class=''><hgroup><h2>dplyr and tidyr: mutate and gsub</h2></hgroup><article  id="dplyr-and-tidyr-mutate-and-gsub" class="smaller ">
+</article></slide><slide class=''><hgroup><h2>dplyr and tidyr: <code>mutate</code> and <code>gsub</code></h2></hgroup><article  id="dplyr-and-tidyr-mutate-and-gsub" class="smaller ">
 
 <p>Add new columns for the parsed values, remove the variable column.</p>
 
@@ -160,7 +160,7 @@ head(iris_parsed)</pre>
 ## 5  setosa         5   5.0       Sepal           Length
 ## 6  setosa         6   5.4       Sepal           Length</pre>
 
-</article></slide><slide class=''><hgroup><h2>dplyr and tidyr: spread</h2></hgroup><article  id="dplyr-and-tidyr-spread" class="smaller ">
+</article></slide><slide class=''><hgroup><h2>dplyr and tidyr: <code>spread</code></h2></hgroup><article  id="dplyr-and-tidyr-spread" class="smaller ">
 
 <p>Convert measurement_types to columns in wide format.</p>
 
@@ -206,7 +206,7 @@ head(iris_spread)</pre>
 
 </article></slide><slide class=''><hgroup><h2>Plot with <code>ggplot</code></h2></hgroup><article  id="plot-with-ggplot" class="smaller ">
 
-<p>Produce a faceted plot with <code>ggplot2</code> instead of <code>qplot</code>.</p>
+<p>Produce a faceted plot with ggplot2&#39;s <code>ggplot</code> instead of <code>qplot</code>.</p>
 
 <pre class = 'prettyprint lang-r'>ggplot(data=iris_spread, aes(x=Width, y=Length))+ 
     # Add points and use free scales in the facet
