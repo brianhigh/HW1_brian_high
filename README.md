@@ -23,3 +23,5 @@ This is a file list:
 format of the other Rmd presentations used for this course.
 
 ... and a "_with_slide_27_plot" version adding a `theme_bw` plot made with `ggplot`.
+
+This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
