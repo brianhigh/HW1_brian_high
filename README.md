@@ -20,4 +20,20 @@ This is a file list:
 - dplyr_and_tidyr_demo.md: Markdown file created by knitting the Rmd file
 - dplyr_and_tidyr_demo.html: HTML file created by knitting the Rmd file
 
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law,
+  <a rel="dct:publisher"
+     href="https://github.com/brianhigh/HW1_brian_high">
+    <span property="dct:title">Brian High</span></a>
+  has waived all copyright and related or neighboring rights to
+  <span property="dct:title">HW1_brian_high</span>.
+This work is published from:
+<span property="vcard:Country" datatype="dct:ISO3166"
+      content="US" about="https://github.com/brianhigh/HW1_brian_high">
+  United States</span>.
+</p>
