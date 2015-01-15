@@ -29,8 +29,9 @@ file.rename("dplyr_and_tidyr_demo.md", "dplyr_and_tidyr_demo.Rmd")
 
 #+ line-break-2, echo=FALSE, eval=FALSE
 
-#' This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
-#' ![CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/88x31.png)
+#' To the extent possible under law, Brian High has waived all copyright and 
+#' related or neighboring rights to "dplyr and tidyr demonstration". This work 
+#' is published from: United States. 
 
 #+ page-break-1, echo=FALSE, eval=FALSE
 
