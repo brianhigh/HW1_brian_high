@@ -1,9 +1,8 @@
 # dplyr and tidyr demonstration
 Brian High  
-Jan. 15th, 2015  
+Jan. 18th, 2015  
 
 ## Introduction
-
 This example shows an alternate way to generate the plot from Raphael
 Gottardo's RMarkdown presentation: 
 [Advanced_graphics_in_R.Rmd](https://github.com/raphg/Biostat-578/blob/master/Advanced_graphics_in_R.Rmd)  
@@ -13,7 +12,7 @@ and `ggplot` plotting code, which was modified from Raphael Gottardo's original.
 
 To the extent possible under law, Brian High has waived all copyright and 
 related or neighboring rights to "dplyr and tidyr demonstration". This work 
-is published from: United States.
+is published from: United States. 
 
 ## Load packages and data
 Load ggplot2 and iris data.
@@ -32,7 +31,7 @@ suppressMessages(library(dplyr))
 suppressMessages(library(tidyr))
 ```
 
-## Add id column to data table
+## dplyr: `mutate`
 Using `mutate`, add a column to keep track of the flower id.
 
 
@@ -51,7 +50,7 @@ head(iris_id)
 ## 6          5.4         3.9          1.7         0.4  setosa         6
 ```
 
-## dplyr and tidyr: `gather`
+## tidyr: `gather`
 Convert wide data format to long format.
 
 
@@ -70,7 +69,7 @@ head(iris_gathered)
 ## 6  setosa         6 Sepal.Length   5.4
 ```
 
-## dplyr and tidyr: `mutate` and `gsub`
+## dplyr: `mutate` and `gsub`
 Add new columns for the parsed values, remove the variable column.
 
 
@@ -92,7 +91,28 @@ head(iris_parsed)
 ## 6  setosa         6   5.4       Sepal           Length
 ```
 
-## dplyr and tidyr: `spread`
+## tidyr: `extract`
+You can also do the parsing and column creation with tidyr's `extract`.
+
+
+```r
+iris_parsed <- extract(iris_gathered, variable, 
+                       c("flower_part", "measurement_type"), "(.+)\\.(.+)")
+    
+head(iris_parsed)
+```
+
+```
+##   Species flower_id flower_part measurement_type value
+## 1  setosa         1       Sepal           Length   5.1
+## 2  setosa         2       Sepal           Length   4.9
+## 3  setosa         3       Sepal           Length   4.7
+## 4  setosa         4       Sepal           Length   4.6
+## 5  setosa         5       Sepal           Length   5.0
+## 6  setosa         6       Sepal           Length   5.4
+```
+
+## tidyr: `spread`
 Convert measurement_types to columns in wide format.
 
 
@@ -120,7 +140,8 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
       color=Species, method="lm", facets= flower_part~Species)
 ```
 
-![](dplyr_and_tidyr_demo_files/figure-html/unnamed-chunk-7-1.png) 
+![](dplyr_and_tidyr_demo_files/figure-html/unnamed-chunk-8-1.png) 
+
 
 ## Repeat using a pipe
 All of the data tidying could be done in one "pipe line".
@@ -129,9 +150,7 @@ All of the data tidying could be done in one "pipe line".
 ```r
 iris_spread <- mutate(iris, flower_id = rownames(iris)) %>%
     gather(variable, value, c(-Species, -flower_id)) %>%
-    mutate(flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
-           measurement_type = gsub("\\w*\\.(\\w*)", "\\1", variable),
-           variable = NULL) %>%
+    extract(variable, c("flower_part", "measurement_type"), "(.+)\\.(.+)") %>%
     spread(measurement_type, value)
 ```
 
@@ -144,20 +163,17 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
       color=Species, method="lm", facets= flower_part~Species)
 ```
 
-![](dplyr_and_tidyr_demo_files/figure-html/qplot-iris-spread-pipe-1.png) 
+![](dplyr_and_tidyr_demo_files/figure-html/unnamed-chunk-10-1.png) 
 
 ## Plot with `ggplot`
 Produce a faceted plot with ggplot2's `ggplot` instead of `qplot`.
 
 
 ```r
-ggplot(data=iris_spread, aes(x=Width, y=Length))+ 
-    # Add points and use free scales in the facet
-    geom_point()+facet_grid(Species~flower_part, scale="free")+
-    # Add a regression line
-    geom_smooth(method="lm")+
-    # Use the black/white theme and increase the font size
-    theme_bw(base_size=12)
+ggplot(data=iris_spread, aes(x=Width, y=Length)) + 
+    geom_point() + facet_grid(Species~flower_part, scale="free") +
+    geom_smooth(method="lm") + theme_bw(base_size=16)
 ```
 
-![](dplyr_and_tidyr_demo_files/figure-html/ggplot-iris-spread-pipe-1.png) 
+![](dplyr_and_tidyr_demo_files/figure-html/unnamed-chunk-11-1.png) 
+

@@ -1,7 +1,7 @@
 #' ---
 #' title: "dplyr and tidyr demonstration"
 #' author: "Brian High"
-#' date: "Jan. 15th, 2015"
+#' date: "Jan. 18th, 2015"
 #' output:
 #'      ioslides_presentation:
 #'          fig_caption: yes
@@ -49,7 +49,7 @@ data(iris)
 suppressMessages(library(dplyr))
 suppressMessages(library(tidyr))
 
-#' ## Add id column to data table
+#' ## dplyr: `mutate`
 
 #' Using `mutate`, add a column to keep track of the flower id.
 
@@ -57,7 +57,7 @@ suppressMessages(library(tidyr))
 iris_id <- mutate(iris, flower_id = rownames(iris))
 head(iris_id)
 
-#' ## dplyr and tidyr: `gather`
+#' ## tidyr: `gather`
 
 #' Convert wide data format to long format.
 
@@ -65,7 +65,7 @@ head(iris_id)
 iris_gathered <- gather(iris_id, variable, value, c(-Species, -flower_id))
 head(iris_gathered)
 
-#' ## dplyr and tidyr: `mutate` and `gsub`
+#' ## dplyr: `mutate` and `gsub`
 
 #' Add new columns for the parsed values, remove the variable column.
 
@@ -76,7 +76,17 @@ iris_parsed <- mutate(iris_gathered,
                       variable = NULL)
 head(iris_parsed)
 
-#' ## dplyr and tidyr: `spread`
+#' ## tidyr: `extract`
+
+#' You can also do the parsing and column creation with tidyr's `extract`.
+
+#+ parse-with-extract, echo=TRUE
+iris_parsed <- extract(iris_gathered, variable, 
+                       c("flower_part", "measurement_type"), "(.+)\\.(.+)")
+    
+head(iris_parsed)
+    
+#' ## tidyr: `spread`
 
 #' Convert measurement_types to columns in wide format.
 
@@ -99,9 +109,7 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 #+ pipe, echo=TRUE
 iris_spread <- mutate(iris, flower_id = rownames(iris)) %>%
     gather(variable, value, c(-Species, -flower_id)) %>%
-    mutate(flower_part = gsub("(\\w*)\\.\\w*", "\\1", variable), 
-           measurement_type = gsub("\\w*\\.(\\w*)", "\\1", variable),
-           variable = NULL) %>%
+    extract(variable, c("flower_part", "measurement_type"), "(.+)\\.(.+)") %>%
     spread(measurement_type, value)
 
 #' ## Plot with ggplot2's `qplot` again
@@ -117,10 +125,6 @@ qplot(x=Width, y=Length, data=iris_spread, geom=c("point","smooth"),
 #' Produce a faceted plot with ggplot2's `ggplot` instead of `qplot`.
 
 #+ ggplot-iris-spread-pipe, echo=TRUE, fig.height=4
-ggplot(data=iris_spread, aes(x=Width, y=Length))+ 
-    # Add points and use free scales in the facet
-    geom_point()+facet_grid(Species~flower_part, scale="free")+
-    # Add a regression line
-    geom_smooth(method="lm")+
-    # Use the black/white theme and increase the font size
-    theme_bw(base_size=18)
+ggplot(data=iris_spread, aes(x=Width, y=Length)) + 
+    geom_point()+facet_grid(Species~flower_part, scale="free") +
+    geom_smooth(method="lm") + theme_bw(base_size=16)
