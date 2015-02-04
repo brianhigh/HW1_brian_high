@@ -1,0 +1,88 @@
+---
+title: "data.table demo"
+author: "Brian High"
+date: "1/30/2015"
+output: 
+    html_document: 
+        keep_md: yes
+---
+
+## Load Packages and Data
+
+Load packages.
+
+```{r, echo=TRUE}
+library(data.table)
+library(ggplot2)
+```
+
+Load the `iris` data.
+
+```{r, echo=TRUE}
+data(iris)
+head(iris)
+```
+
+Convert to a `data.table`.
+
+```{r, echo=TRUE}
+irisdt <- as.data.table(iris)
+head(irisdt)
+```
+
+## Prepare for Reshaping
+
+Add a column for the flower id.
+
+```{r, echo=TRUE}
+irisdt[, flower_id := as.numeric(rownames(iris))]
+head(irisdt)
+```
+
+## Reshape with `melt` and `dcast`
+
+Convert wide data format to long format.
+
+```{r, echo=TRUE}
+irisdt_melted <- melt(irisdt, 
+                      id = c("flower_id", "Species"), 
+                      measure = c("Sepal.Length", "Sepal.Width", 
+                                  "Petal.Length", "Petal.Width"))
+head(irisdt_melted)
+```
+
+Add new columns for the parsed values. Remove the variable column.
+
+```{r, echo=TRUE}
+irisdt_melted[, flower_part := gsub("(\\w*)\\.\\w*", "\\1", variable)]
+irisdt_melted[, measurement_type := gsub("\\w*\\.(\\w*)", "\\1", variable)]
+irisdt_melted[, variable := NULL]
+head(irisdt_melted)
+```
+
+Convert `measurement_type` to columns in wide format.
+
+```{r, echo=TRUE}
+irisdt_dcast <- dcast(irisdt_melted, 
+                     formula=flower_id+Species+flower_part~measurement_type)
+head(irisdt_dcast)
+```
+
+## Plot with `qplot`
+
+Produce faceted plot with ggplot2's `qplot`.
+
+```{r, echo=TRUE}
+qplot(x=Width, y=Length, data=irisdt_dcast, geom=c("point","smooth"), 
+      color=Species, method="lm", facets=flower_part~Species)
+```
+
+## Plot with `ggplot`
+
+Produce a faceted plot with ggplot2's `ggplot` instead of `qplot`.
+
+```{r, echo=TRUE}
+ggplot(data=irisdt_dcast, aes(x=Width, y=Length)) + 
+    geom_point() + facet_grid(Species~flower_part, scale="free") +
+    geom_smooth(method="lm") + theme_bw(base_size=16)
+```
